@@ -1,0 +1,9 @@
+group = 'com.savemoney.web'
+version = 'v0.0.5-alpha'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    testImplementation 'org.springframework.security:spring-security-test'
+}

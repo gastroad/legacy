@@ -1,0 +1,13 @@
+group = 'com.savemoney.core'
+version = 'v0.0.2-alpha'
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+}

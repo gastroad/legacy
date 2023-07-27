@@ -1,0 +1,13 @@
+/jarvis-frontend/node_modules
+/jarvis-frontend/build
+/jarvis-frontend/.idea
+/jarvis-frontend/package-lock.json
+/jarvis-frontend/.vscode
+/jarvis-frontend/.eslintrc
+
+/jarvis-backend/node_modules
+/jarvis-backend/package-lock.json
+# /.idea
+# /.vscode
+
+# package-lock.json

@@ -1,0 +1,14 @@
+group = 'com.savemoney.steam'
+version = 'v0.0.3-alpha'
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+}

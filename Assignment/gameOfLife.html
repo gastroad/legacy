@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Game of Life</title>
+
+
+    <style>
+      #title{
+        color: blue;
+        text-align: center;
+
+      }
+      .cell{
+        height: 15px;
+        width:  15px;
+        outline: 1px solid #ddd;
+        float:left;
+      }
+      #setting{
+        clear: both;
+
+      }
+      #container{
+        width: 125px;
+        margin: 0 auto;
+      }
+      #setting{
+        width: 400px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="Header">
+      <h1 id="title">Game Of Life</h1>
+    </div>
+    <div id="container"></div>
+    <div id="setting">
+      <input type="text" value="50" id="size" >
+      <input type="button" value="Start"onclick="" id="Start">
+      <input type="button" value="stop" onclick="" id="stop">
+      <input type="button" value="next" onclick="" id="next">
+    </div>
+    <div id="Footer"></div>
+
+</script>
+    <script type="text/javascript" >
+        let size = document.querySelector("#size")
+        let sizeValue
+        let cloneCell
+        let deadCell = new Array()
+        let aliveCell = new Array()
+        let container = document.querySelector("#container")
+        let nextAuto
+        function nextAutoStart(){
+          clearInterval(nextAuto)
+          nextAuto = setInterval(next,500)
+        }
+        function nextAutoStop(){
+          clearInterval(nextAuto)
+        }
+
+        function createCell(){
+
+          while ( container.hasChildNodes() ) { container.removeChild( container.firstChild ); }
+
+          sizeValue = parseInt(size.value)
+          container.style.width = (sizeValue * 15) + "px"
+
+          if (sizeValue === "") return
+
+          let cell = document.createElement("div")
+          cell.className = "cell"
+
+
+          cloneCell = new Array(sizeValue)
+          for (let i = 0; i < sizeValue; i++) {
+            cloneCell[i] = new Array(sizeValue)
+          }
+
+          for (let i = 0; i < sizeValue; i++) {
+            for(let j =0; j< sizeValue; j++){
+            cloneCell[i][j] = cell.cloneNode()
+            cloneCell[i][j].setAttribute('id', i + ',' + j)
+            container.appendChild(cloneCell[i][j])
+            }
+          }
+      // next()
+      }
+
+        addEventListener('load', () => createCell())
+        size.addEventListener('input', () => createCell())
+        document.querySelector('#next').addEventListener('click', () => next())
+        document.querySelector('#Start').addEventListener('click', () => nextAutoStart())
+        document.querySelector("#stop").addEventListener('click', () => nextAutoStop())
+
+
+
+        container.addEventListener("click", (e) =>{
+          if (e.target.className !== 'cell') return
+          e.target.style.background = "black"
+
+        })
+
+        function next() {
+          for (let i = 0; i < sizeValue; i++) {
+            for (let j = 0; j < sizeValue; j++) {
+              if (cloneCell[i][j].style.background !== 'black') {
+                checkedCell(i, j)
+                if (life === 2) aliveCell.pop()
+                continue
+              }
+              checkedCell(i, j)
+            }
+          }
+          for (let i = 0; i < aliveCell.length; i++) {
+            cloneCell[aliveCell[i][0]][aliveCell[i][1]].style.background = 'black'
+          }
+          for (let i = 0; i < deadCell.length; i++) {
+            cloneCell[deadCell[i][0]][deadCell[i][1]].style.background = ''
+          }
+
+          aliveCell = new Array()
+          deadCell = new Array()
+        }
+
+
+
+        function checkedCell(i, j) {
+          life = 0
+
+          if (i === 0) {
+            if (j === 0) {
+              if (cloneCell[i][j + 1].style.background === 'black') life++
+
+              if (cloneCell[i + 1][j].style.background === 'black') life++
+              if (cloneCell[i + 1][j + 1].style.background === 'black') life++
+            }
+            else if (j === sizeValue - 1) {
+              if (cloneCell[i][j - 1].style.background === 'black') life++
+
+              if (cloneCell[i + 1][j - 1].style.background === 'black') life++
+              if (cloneCell[i + 1][j].style.background === 'black') life++
+            }
+            else {
+              if (cloneCell[i][j - 1].style.background === 'black') life++
+              if (cloneCell[i][j + 1].style.background === 'black') life++
+
+              if (cloneCell[i + 1][j - 1].style.background === 'black') life++
+              if (cloneCell[i + 1][j].style.background === 'black') life++
+              if (cloneCell[i + 1][j + 1].style.background === 'black') life++
+            }
+          }
+          else if (i === sizeValue - 1) {
+            if (j === 0) {
+              if (cloneCell[i - 1][j].style.background === 'black') life++
+              if (cloneCell[i - 1][j + 1].style.background === 'black') life++
+
+              if (cloneCell[i][j + 1].style.background === 'black') life++
+            }
+            else if (j === sizeValue - 1) {
+              if (cloneCell[i - 1][j - 1].style.background === 'black') life++
+              if (cloneCell[i - 1][j].style.background === 'black') life++
+
+              if (cloneCell[i][j - 1].style.background === 'black') life++
+            }
+            else {
+              if (cloneCell[i - 1][j - 1].style.background === 'black') life++
+              if (cloneCell[i - 1][j].style.background === 'black') life++
+              if (cloneCell[i - 1][j + 1].style.background === 'black') life++
+
+              if (cloneCell[i][j - 1].style.background === 'black') life++
+              if (cloneCell[i][j + 1].style.background === 'black') life++
+            }
+          }
+          else {
+            if (j === 0) {
+              if (cloneCell[i - 1][j].style.background === 'black') life++
+              if (cloneCell[i - 1][j + 1].style.background === 'black') life++
+
+              if (cloneCell[i][j + 1].style.background === 'black') life++
+
+              if (cloneCell[i + 1][j].style.background === 'black') life++
+              if (cloneCell[i + 1][j + 1].style.background === 'black') life++
+            }
+            else if (j === sizeValue - 1) {
+              if (cloneCell[i - 1][j - 1].style.background === 'black') life++
+              if (cloneCell[i - 1][j].style.background === 'black') life++
+
+              if (cloneCell[i][j - 1].style.background === 'black') life++
+
+              if (cloneCell[i + 1][j - 1].style.background === 'black') life++
+              if (cloneCell[i + 1][j].style.background === 'black') life++
+            }
+            else {
+              if (cloneCell[i - 1][j - 1].style.background === 'black') life++
+              if (cloneCell[i - 1][j].style.background === 'black') life++
+              if (cloneCell[i - 1][j + 1].style.background === 'black') life++
+
+              if (cloneCell[i][j - 1].style.background === 'black') life++
+              if (cloneCell[i][j + 1].style.background === 'black') life++
+
+              if (cloneCell[i + 1][j - 1].style.background === 'black') life++
+              if (cloneCell[i + 1][j].style.background === 'black') life++
+              if (cloneCell[i + 1][j + 1].style.background === 'black') life++
+            }
+          }
+
+
+          if (life === 2 || life === 3) aliveCell.push([i, j])
+          else deadCell.push([i, j])
+        }
+
+
+
+
+
+    </script>
+  </body>
+</html>

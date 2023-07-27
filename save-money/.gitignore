@@ -1,0 +1,41 @@
+### Frontend ###
+/save-money-front/node_modules/
+/save-money-front/build
+
+### Backend ###
+HELP.md
+save-money-back/save-money-web/src/main/resources/application.properties
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+save-money-back/save-money-core/src/main/resources/application.properties
+save-money-back/save-money-steam/src/main/resources/application.properties
