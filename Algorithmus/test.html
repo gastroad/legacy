@@ -1,0 +1,152 @@
+<html>
+<script>
+    function 추억점수(names, yearning, photos) {
+        let mapper = {}
+        names.map((name, index) => {
+            mapper = { ...mapper, [name]: yearning[index] }
+        })
+        return photos.map((photo) => {
+            return photo.reduce(
+                (acc, currentValue) => {
+                    const value = mapper[currentValue] === undefined ? 0 : mapper[currentValue]
+                    const result = acc + value
+                    return result
+                },
+                0
+            );
+        })
+    }
+    function 바탕화면정리(wallpaper) {
+        const board = wallpaper.map(line => line.split(""))
+        let minRow = Infinity
+        let minCol = Infinity
+        let maxRow = -Infinity
+        let maxCol = -Infinity
+
+        board.forEach((row, rowIndex) => row.forEach((value, colIndex) => {
+            if (value === "#") {
+                minRow = Math.min(minRow, rowIndex)
+                minCol = Math.min(minCol, colIndex)
+                maxRow = Math.max(maxRow, rowIndex)
+                maxCol = Math.max(maxCol, colIndex)
+            }
+        }));
+        var answer = [minRow, minCol, maxRow + 1, maxCol + 1];
+        return answer;
+    }
+
+    function 대충만든자판(keymap, targets) {
+        const keyboardMap = {}
+        keymap.forEach((keyboard) => keyboard.split("").forEach((key, index) => {
+            keyboardMap[key] = Math.min(keyboardMap[key] ? keyboardMap[key] : Infinity, index + 1)
+        }))
+        return targets.map((target) => {
+            const temp = target.split("").reduce((acc, value) => {
+                return acc + keyboardMap[value]
+            }, 0)
+            return isNaN(temp) ? -1 : temp
+        })
+    }
+    대충만든자판(["ABACD", "BCEFD"], ["ABCD", "AABB"])
+    대충만든자판(["AA"], ["B"]
+    )
+    function 개인정보수집유효기간(today, terms, privacies) {
+        var answer = [];
+        const todayObj = new Date(today).getTime()
+        const termsMapper = terms.reduce((acc, term) => {
+            const [key, value] = term.split(" ");
+            return {
+                ...acc,
+                [key]: Number(value),
+            };
+        }, {});
+        privacies.forEach((privacy, index) => {
+            const [date, type] = privacy.split(" ")
+            const exfireDate = new Date(date).setMonth(new Date(date).getMonth() + termsMapper[type]);
+            if (exfireDate <= todayObj) {
+                answer.push(index + 1)
+            }
+        })
+        return answer;
+    }
+    개인정보수집유효기간("2020.01.01", ["Z 3", "D 5"], ["2019.01.01 D", "2019.11.15 Z", "2019.08.02 D", "2019.07.01 D", "2018.12.28 Z"])
+
+    function 크기가작은부분문자열(t, p) {
+        let temp = []
+        for (let i = 0; i < t.length - p.length + 1; i++) {
+            temp.push(t.substr(i, p.length))
+        }
+        return temp.filter((value) => value <= p).length
+    }
+    크기가작은부분문자열("3141592", "271")
+
+    function 명예의전당1(k, scores) {
+        var answer = [];
+        var honorList = [];
+        scores.forEach((score) => {
+            if (honorList.length < k) {
+                honorList.push(score)
+                answer.push(Math.min(...honorList))
+            } else {
+                let sortedHonorList = honorList.sort((a, b) => a - b)
+                let i = 0
+                while (i < k) {
+                    if (sortedHonorList[i] <= score) {
+                        sortedHonorList.splice(i, 1, score)
+                        i = k
+                    }
+                    ++i
+                }
+                answer.push(Math.min(...honorList))
+            }
+        })
+        return answer;
+    }
+
+
+    function 기사단원의무기(number, limit, power) {
+        let answer = 0
+        function getDivisorCount(number) {
+            let count = 0;
+            for (let i = 1; i <= Math.sqrt(number); i++) {
+                if (number % i === 0) {
+                    if (number / i === i) {
+                        count++;
+                    } else {
+                        count += 2;
+                    }
+                }
+            }
+            return count;
+        }
+        Array.from({ length: number }, (_, index) => index + 1).forEach((number) => {
+            const divisorCount = getDivisorCount(number)
+            if (divisorCount > limit) {
+                answer += power
+            } else {
+                answer += divisorCount
+            }
+        })
+        return answer;
+    }
+
+    // function solution(k, m, score) {
+    //     let answer = 0;
+    //     score.sort((a, b) => b - a)
+    //     score.forEach((s, index) => {
+    //         if (index % m === 0) {
+    //             const groupBox = score.slice(index, index + m)
+    //             if (groupBox.length === m) {
+    //                 answer += (Math.min(...groupBox) * m)
+    //             }
+    //         }
+    //     })
+    //     return answer;
+    // }
+
+
+
+
+</script>
+
+</html>
